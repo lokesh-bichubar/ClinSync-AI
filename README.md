@@ -343,3 +343,7 @@ Built for verification, not hallucination. Autonomous where safe. Human where it
 
 **Author:** ClinSync AI Team — 13 Sep 2026  
 **Version:** v1.0.0 — `SYNTHETIC • DEIDENTIFIED • NO REAL PHI`
+
+**Team:** Vibranium  
+**Leader:** Lokesh  
+**Co-Leader:** Jatin Saini
