@@ -1,349 +1,314 @@
-# ClinSync AI — From Consultation to Verified Documentation
+<div align="center">
 
-> **An AI agent that reconciles fragmented clinical information, verifies evidence, detects inconsistencies, and knows when to ask a human.**
+# 🏆 Agentic AI- IIT Bhuwneshwar
 
-[![Synthetic Data Only](https://img.shields.io/badge/data-synthetic%20%7C%20deidentified-22D3EE?style=for-the-badge)](#safety-by-design)
-[![No Autonomous Diagnosis](https://img.shields.io/badge/safety-no%20autonomous%20clinical%20decisions-F87171?style=for-the-badge)](#safety-by-design)
-[![Live Demo](https://img.shields.io/badge/demo-fully%20functional%20%7C%20deterministic-34D399?style=for-the-badge)](#live-demo)
+## 💜 Team Vibranium
 
-**Live Site:** Open `index.html` — zero dependencies, works offline. Deploy to GitHub Pages / Vercel / Netlify as static site.
+<img alt="Hackathon project" src="https://img.shields.io/badge/HACKATHON-PROJECT-7C3AED?style=for-the-badge" />
+<img alt="Team Vibranium" src="https://img.shields.io/badge/TEAM-VIBRANIUM-DB2777?style=for-the-badge" />
+<img alt="Agentic AI" src="https://img.shields.io/badge/AGENTIC-AI-0891B2?style=for-the-badge" />
 
-**Tagline:** *“ClinSync AI doesn’t just generate documentation. It reconciles information, verifies evidence, validates the result, and knows when a human needs to take over.”*
+**🧑‍💻 Leader: Lokesh · Quantum University**  
+**🤝 Co-leader: Jatin Saini · NGF College of Engineering & Technology**
 
----
+</div>
 
-## Table of Contents
-
-- [Problem](#problem)
-- [Solution](#solution)
-- [Live Demo — 5 Synthetic Scenarios](#live-demo--5-synthetic-scenarios)
-- [Key Features](#key-features)
-- [Architecture](#architecture)
-- [Reconciliation Engine](#reconciliation-engine)
-- [Validation Engine](#validation-engine)
-- [Safety by Design](#safety-by-design)
-- [Project Structure](#project-structure)
-- [How to Run](#how-to-run)
-- [How to Use the Demo](#how-to-use-the-demo)
-- [Adaptation Demo](#adaptation-demo)
-- [Tech Stack](#tech-stack)
-- [Deployment](#deployment)
-- [License](#license)
+| Role | Name | Institution |
+| --- | --- | --- |
+| 🟣 **Leader** | **Lokesh** | **Quantum University** |
+| 🔵 **Co-leader** | **Jatin Saini** | **NGF College of Engineering & Technology** |
 
 ---
 
-## Problem
+<div align="center">
 
-Clinical information is fragmented across:
+# 🩺 ClinSync AI
+### From fragmented clinical information to source-linked documentation.
 
-- **Consultation Transcripts** — subjective, temporal (“stopped 2 weeks ago”)
-- **Previous Notes** — often outdated
-- **Medication History** — EHR says Active, pharmacy says no refill
-- **Allergy Records** — patient denies, EHR documents rash
-- **Lab Reports** — 1.1 mg/dL on Aug 10 vs 1.6 on Sep 05
-- **New Updates** — arrive after encounter, changing interpretation
+<img alt="Python 3.11 or newer" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" />
+<img alt="FastAPI backend" src="https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&amp;logo=fastapi&amp;logoColor=white" />
+<img alt="OpenAI integration" src="https://img.shields.io/badge/AI-OpenAI-10A37F?style=flat-square" />
+<img alt="JavaScript frontend" src="https://img.shields.io/badge/Frontend-JavaScript-F7DF1E?style=flat-square&amp;logo=javascript&amp;logoColor=black" />
 
-Result: contradictions, missing dosage, ambiguous statements, outdated records. Manual reconciliation is slow and error-prone.
+<img alt="22 backend tests passed" src="https://img.shields.io/badge/Backend_tests-22_passed-16A34A?style=flat-square" />
+<img alt="Hackathon prototype" src="https://img.shields.io/badge/Status-Prototype-F59E0B?style=flat-square" />
+<img alt="Human review required" src="https://img.shields.io/badge/Human_review-Required-E11D48?style=flat-square" />
 
-## Solution
+</div>
 
-ClinSync AI is a **deterministic, auditable, tool-driven documentation agent**:
+**A hackathon project by Team Vibranium**, exploring how an agentic documentation workflow can organize consultation notes, surface inconsistencies, and keep humans in control of the final record.
 
-1. **Ingest** 5+ source types with timestamps & source IDs
-2. **Extract** entities (med name/status/dosage, allergen, lab value)
-3. **Reconcile** by grouping on normalized entity + comparing across sources
-4. **Detect** contradictions, missing info, ambiguity, outdated records with severity
-5. **Retrieve** supporting evidence via simulated tools (real JS functions)
-6. **Generate** structured follow-up record with 11 sections + source traceability
-7. **Validate** with 10 checks
-8. **Decide:** Safely resolved OR Human Review Required (for high-severity)
-9. **Adapt** when new information arrives — shows Before vs After diff
+> [!WARNING]
+> **🟠 Hackathon prototype — not production clinical software.** Use synthetic or properly de-identified test data only. Every generated record remains a draft requiring human review.
 
-All logic runs client-side, no external AI API, no PHI. Synthetic data only.
+## 🔴 The Problem
 
----
+Clinical information often exists across consultation transcripts, previous notes, medication lists, allergy records, and laboratory reports. These sources may contain conflicting details, missing context, or information recorded at different times.
 
-## Live Demo — 5 Synthetic Scenarios
+Reviewing them manually can make documentation slow and difficult to trace.
 
-| ID | Scenario | Severity | What it tests |
-|---|---|---|---|
-| `SYN-P-001` | **Medication Conflict** | HIGH | Patient reports stopping Lisinopril (dizziness), EHR Active, pharmacy no refill since Aug 20 |
-| `SYN-P-002` | **Allergy Conflict** | HIGH | Patient denies allergies, EHR documents Penicillin rash 2024 + unverified shellfish itching |
-| `SYN-P-003` | **Laboratory Update** | MEDIUM | Creatinine 1.1 (Aug 10) → 1.6 High (Sep 05) → 1.3 Improving (Sep 12 repeat) |
-| `SYN-P-004` | **Missing Information** | LOW | Levothyroxine dosage missing in EHR, present in pharmacy (75mcg); latex reaction missing |
-| `SYN-P-005` | **Multiple Conflicts** | HIGH | Atorvastatin discontinuation + NKA vs Penicillin + missing dosage + outdated creatinine — stress test |
+## 💡 Our Approach
 
-Each patient has:
-- Synthetic ID, name, age, gender, MRN
-- Consultation transcript with sourceId `CONS-XXX`
-- Previous note `NOTE-XXX`
-- Medications with `priority: 1=latest verified, 2=EHR, 3=patient-reported`
-- Allergies, Labs with timestamps, source, sourceId
-- `newInformation` for adaptation demo
+ClinSync AI brings multiple text sources into one workspace and uses an OpenAI-backed workflow to prepare structured, source-linked draft findings.
 
----
+The core idea is simple:
 
-## Key Features
+| 🔵 Organize | 🟠 Flag | 🟢 Trace | 🟣 Review |
+| :---: | :---: | :---: | :---: |
+| Bring source records together | Preserve conflicts and uncertainty | Show supporting source quotes | Keep humans in control |
 
-### Fully Functional (Not a Mockup)
-- ✅ Every button performs real action
-- ✅ Navigation smooth-scrolls
-- ✅ Workflow executes with real JS logic, not fake animations
-- ✅ Data updates dynamically from synthetic engine
-- ✅ Forms accept input (scenario selector)
-- ✅ Reset / Replay / Introduce New Information all work
+Instead of presenting AI output as a finalized medical record, the application exposes supporting quotes, flags potential issues, and lets a reviewer inspect the draft before exporting it.
 
-### Demo Capabilities
-- **Workflow Bar:** 7 steps with progress, status, animated connectors
-- **Sources & Conflicts:** Shows Source A vs Source B, date, priority, evidence, field
-- **Evidence Panel:** FACT, SOURCE, DATE, CONFIDENCE, STATUS, verification
-- **Structured Follow-up Record:** 11 sections, source badges clickable → modal with Source/Date/Type/Evidence
-- **Validation Engine:** 10 checks with PASS/FAIL + exact reason
-- **Human Review:** Approve / Mark for Review / Return to Reconciliation — mutates state + audit trail
-- **Audit Trail:** Live timestamps `HH:MM:SS` — ingest, conflict detected, evidence retrieved, validation, decision
-- **Simulated Tools:** Patient DB, Med Lookup, Allergy Lookup, Lab Retrieval, Knowledge, Validation — visible searching → found
-- **Before vs After:** Highlights changed fields after new info injection
-- **Analytics:** Sources Processed, Conflicts Detected/Resolved, Review Items, Validation Checks, Completeness — calculated live
-- **Responsive + Dark/Light Mode**
+## ✨ Key Features
 
----
+- **📥 Multi-source input:** Paste consultation text and supporting records, or import UTF-8 `.txt` files.
+- **🧠 Structured AI drafts:** Generate findings covering the visit, medications, allergies, laboratory information, history, and open questions.
+- **🚩 Conflict and uncertainty flags:** Ask the model to surface contradictory, missing, or ambiguous information without silently resolving it.
+- **🔗 Source traceability:** Display source names and quoted excerpts alongside draft findings.
+- **🔎 Server-side quote checks:** Check whether each returned quote appears exactly in the referenced source.
+- **🧑‍⚕️ Human review:** Inspect individual findings, track reviewed items, and add reviewer notes.
+- **📤 Draft exports:** Download results as `.txt` or `.json`, retaining draft status and review information.
+- **🔐 Protected AI processing:** Keep API credentials server-side, with password-gated processing, session cookies, CSRF checks, and basic request limits.
+- **📱 Responsive interface:** Desktop and mobile layouts with accessible navigation and reduced-motion support.
+- **🎮 No-key preview:** Explore a clearly labeled illustrative sample without calling OpenAI.
 
-## Architecture
+> [!IMPORTANT]
+> **🔎 Traceability is not clinical verification.** A matching quote establishes literal source traceability—not clinical truth or correct interpretation. The model can still make mistakes or omit important information.
 
-```
-Synthetic Data (5 scenarios, source IDs, timestamps)
-        ↓
-Ingestion (normalize dates, assign priority, validate required fields)
-        ↓
-Information Extraction (deterministic pattern matching, no hallucination)
-        ↓
-Reconciliation Engine (group by normalized name: meds, allergen, lab test)
-        ↓
-Conflict Detection (contradiction, missing, ambiguity, outdated + severity)
-        ↓
-Evidence Retrieval (6 tools = real JS functions searching synthetic DB)
-        ↓
-Documentation Generator (template + reconciliation output, every field sourceRefs)
-        ↓
-Validation Engine (10 checks)
-        ↓
-Human Review (escalation for high-severity, safety invariant enforced)
-        ↓
-Verified Follow-up Record + Audit Trail
+## 🔄 Implemented Workflow
+
+```text
+Consultation + Supporting Text Records
+                  │
+                  ▼
+         Input Validation
+                  │
+                  ▼
+     OpenAI Structured Draft Generation
+       • Organize supplied information
+       • Surface potential conflicts
+       • Preserve source references
+                  │
+                  ▼
+       Server-side Output Checks
+       • Validate response structure
+       • Match quotes to source text
+                  │
+                  ▼
+            Human Review
+       • Inspect source evidence
+       • Record unresolved concerns
+                  │
+                  ▼
+          Export Draft TXT / JSON
 ```
 
-**Clickable nodes** in UI explain each component's purpose, inputs, outputs, safety.
+### 🧠 Agentic Design Direction
 
----
+The broader hackathon vision follows seven stages: **ingest → reconcile → detect → retrieve → document → validate → revise or escalate**.
 
-## Reconciliation Engine
+The current implementation is a bounded, single-request AI workflow with deterministic output checks and human review. It is **not** a fully autonomous multi-agent system. External retrieval, EHR connectivity, pharmacy lookup, laboratory integrations, and guideline RAG remain future work; the landing page illustrates that broader vision.
 
-Real client-side logic (see `index.html` and `engine.js`):
+## 🛠️ Technology Stack
 
-```javascript
-// Group medications by normalized name
-const medGroups = {};
-sources.filter(s=>s.kind==='medication').forEach(m=>{
-  const key = normalizeName(m.name); // lisinopril
-  if(!medGroups[key]) medGroups[key]=[];
-  medGroups[key].push(m);
-});
+| Layer | Technology |
+| --- | --- |
+| 🟡 Frontend | HTML, CSS, JavaScript |
+| 🟢 Backend | Python, FastAPI, Uvicorn |
+| 🟣 AI integration | OpenAI Chat Completions with strict JSON-schema output |
+| 🔵 HTTP client | HTTPX |
+| 🟠 Validation | Pydantic and server-side quote matching |
+| 🔐 Session handling | Signed HttpOnly cookies via Starlette |
+| ✅ Testing | Pytest and Playwright |
 
-// Detect status conflict: Active vs Patient-reported discontinuation
-if (statuses.length > 1) {
-  conflicts.push({
-    type: "Medication Status Conflict",
-    severity: "high", // requires human review
-    sourceA, sourceB,
-    field: "Medication Reconciliation"
-  });
-}
+## 🚀 Getting Started
 
-// Missing dosage → supplement from pharmacy if available (low severity, safely resolvable)
-// Allergy: NKA vs Active → high severity, always escalate
-// Lab: outdated → compare timestamps, use latest
-// Ambiguity: regex for "about 2 weeks", "I think", "maybe", "not sure"
-```
+### 📋 Prerequisites
 
-**Resolution Rules:**
-- **High severity** (med status change, allergy contradiction): Document as `Patient-reported discontinuation - Pending provider verification`, flag for human review. Never auto-change.
-- **Medium** (lab outdated): Safely resolve by using latest verified lab.
-- **Low** (missing dosage, missing reaction): Supplement from pharmacy/nursing if evidence exists.
+- Python **3.11 or newer**
+- A modern web browser
+- An OpenAI API key with access to a model supporting Chat Completions and strict structured output
 
----
+An API key is only required for AI generation. The illustrative sample works without one.
 
-## Validation Engine
+### 1️⃣ Clone the repository
 
-10 checks, each with pass/fail + reason:
-
-1. **Date consistency** — encounter after previous note
-2. **Medication consistency** — no duplicate active with different dosage
-3. **Allergy consistency** — contradiction requires human review
-4. **Lab consistency** — using latest values
-5. **Duplicate information**
-6. **Missing fields** — supplemented where possible
-7. **Unsupported claims** — all facts traceable (never invent)
-8. **Conflicting records** — high-severity requires review
-9. **Source traceability** — every field has sourceId
-10. **Latest-record handling** — priority 1 wins
-
-Overall: `VALIDATION PASSED` or `VALIDATION FAILED` + `HUMAN REVIEW REQUIRED` if high-severity remains.
-
----
-
-## Safety by Design
-
-> **“Knowing when NOT to guess is part of intelligence.”**
-
-**Enforced in code:**
-
-```javascript
-if (conflict.severity === 'high' && !humanApproved) {
-  return 'HUMAN_REVIEW_REQUIRED';
-}
-// Never auto-prescribe, diagnose, or change med instructions
-```
-
-| Rule | Status |
-|---|---|
-| Synthetic data only (SYN-P-XXX, no real PHI) | ✅ Allow |
-| No autonomous diagnosis | ❌ Deny — system only reconciles provided sources |
-| No autonomous prescribing | ❌ Deny |
-| No treatment recommendations | ❌ Deny |
-| No medication changes | ❌ Deny — documents as “pending verification” |
-| Human review for consequential uncertainty | ✅ Enforce |
-
----
-
-## Project Structure
-
-```
-/
-├── index.html          # Fully functional single-file app (122KB, 2207 lines)
-│                       # Contains: UI, CSS, synthetic data, engine, validation,
-│                       #           audit trail, evidence, human review, analytics
-│                       # Works in GitHub preview (inline styles, no external deps)
-├── engine.js           # Documentation of reconciliation & validation architecture
-├── data.js             # Documentation of synthetic data engine
-├── README.md           # This file
-└── .gitignore          # (optional)
-```
-
-**Why single-file `index.html`?**
-- Preview in GitHub / Arena iframe has no network access — external CSS/JS would fail to load. Inline ensures it renders everywhere.
-- Still maintains component separation logically: `SYNTHETIC_PATIENTS`, `reconcile`, `detect`, `retrieve`, `generateFollowUpRecord`, `validate`, `audit`, `toolsState`, `render*` functions.
-
-For production, you can split into Vite/Next.js — logic is already modular.
-
----
-
-## How to Run
-
-### Option 1: Open directly (no build)
 ```bash
-git clone https://github.com/your-org/clinsync-ai.git
-cd clinsync-ai
-open index.html
-# or: python3 -m http.server 8000 → http://localhost:8000
+git clone <your-repository-url>
+cd <your-repository-folder>
 ```
 
-### Option 2: GitHub Pages
-1. Push `index.html` to `main` branch root
-2. Settings → Pages → Source: `main` / root
-3. Site live at `https://your-org.github.io/clinsync-ai/`
+Run the following commands from the directory containing `app.py` and `requirements.txt`.
 
-### Option 3: Vercel / Netlify
-- Drag & drop `index.html` or connect repo — static deployment, no build command needed.
+### 2️⃣ Create a virtual environment
 
-No API keys, no backend, no env vars. Deterministic synthetic fallback works offline.
-
----
-
-## How to Use the Demo
-
-1. **Open site** → Understand problem in Problem cards (hover to see conflicts)
-2. **Learn flow** in How It Works → click architecture nodes
-3. **Live Demo:**
-   - Select scenario (e.g., Medication Conflict)
-   - Click **▶ Run ClinSync AI**
-   - Watch 7 steps execute: sources load → conflicts detected → evidence retrieved → record generated → validation → decision
-   - Inspect Sources & Conflicts panel (Source A vs B)
-   - Check Evidence panel (confidence, verification)
-   - Read Structured Follow-up Record — click source badges for modal
-   - Review Validation (PASS/FAIL) and Audit Trail
-   - If Human Review Required → try Approve / Mark for Review / Return to Reconciliation
-4. **Introduce New Information** → injects pharmacy/lab update → auto re-runs → Before vs After diff
-5. **Show Changes** toggle highlights updated fields
-6. **Reset / Replay** to watch again
-
----
-
-## Adaptation Demo
-
-Required feature — implemented:
-
-- Original: `Lisinopril Active (EHR 2026-08-15)`
-- New consultation: Patient reports stopped
-- New info button: Pharmacy dispense `not refilled since 2026-08-20`
-
-System:
-1. Detects new information exists
-2. Compares with previous state
-3. Re-runs reconciliation
-4. Updates follow-up record
-5. Re-runs validation
-6. Shows exactly what changed in Before vs After panel with cyan highlight
-
----
-
-## Tech Stack
-
-- **Frontend:** Vanilla HTML5, CSS3 (CSS variables, glassmorphism, grid, flex, animations), ES6+ JavaScript (no framework, no build step)
-- **Fonts:** Inter + JetBrains Mono (fallback to system if offline)
-- **State:** Single `state` object — workflow, sources, conflicts, evidence, record, validation, audit, tools
-- **Engine:** Deterministic, client-side, no external dependencies
-- **Design:** Deep navy #0B1220, white, cyan #22D3EE / blue #3B82F6, premium healthcare + AI startup aesthetic
-
----
-
-## Deployment
-
-The site is **production-quality and immediately deployable**:
-
-- No TODOs, no placeholder buttons, no “coming soon”
-- All CTAs functional
-- Error handling: missing records, empty transcript, conflicting records, failed retrieval, validation failure — shows useful messages, never silent fail
-- Responsive: Desktop, Laptop, Tablet, Mobile tested
-- Dark mode default, light mode toggle
-
-**GitHub Push Checklist:**
 ```bash
-git add index.html README.md
-git commit -m "feat: ClinSync AI — fully functional reconciliation demo with 5 synthetic scenarios"
-git push origin main
+python -m venv .venv
 ```
 
-Enable GitHub Pages and you’re live.
+**macOS / Linux**
+
+```bash
+source .venv/bin/activate
+```
+
+**Windows PowerShell**
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+### 3️⃣ Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 4️⃣ Configure the server
+
+Copy `.env.example` to `.env` and update the values locally:
+
+```dotenv
+OPENAI_API_KEY=your-openai-api-key
+OPENAI_MODEL=gpt-4.1-mini
+APP_ACCESS_PASSWORD=choose-a-long-unique-password
+SESSION_SECRET=replace-with-a-random-secret
+COOKIE_SECURE=false
+```
+
+Generate a random session secret:
+
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+**Important:**
+
+- Never commit `.env`, API keys, passwords, or patient records to GitHub.
+- Keep `.env` excluded through `.gitignore`.
+- Use `COOKIE_SECURE=false` only for local HTTP testing. Use `true` when serving over HTTPS.
+- Restart the server after changing configuration.
+- The default model is configurable; confirm model availability in your OpenAI project.
+
+### 5️⃣ Start the application
+
+```bash
+python -m uvicorn app:app --host 127.0.0.1 --port 8000 --no-access-log
+```
+
+Open **http://127.0.0.1:8000** in your browser.
+
+For a hosted development preview, use `--host 0.0.0.0` instead. Run a single worker because prototype rate limits and concurrency controls are held in memory.
+
+> [!TIP]
+> **🚀 Run through the Python server**, not by double-clicking the HTML file. If an embedded preview blocks session cookies, open it in a separate browser tab.
+
+## 🎬 Hackathon Demo Flow
+
+1. Select **Try the Workspace**.
+2. Enter the configured workspace password to unlock AI processing.
+3. Select **Load synthetic example**, or add your own synthetic/de-identified test sources.
+4. Confirm the test-data declaration and select **Generate draft**.
+5. Inspect each finding and expand its source evidence.
+6. Add reviewer notes and mark inspected findings.
+7. Export the draft as TXT or JSON.
+
+> [!TIP]
+> **🎮 No API key?** Select **Preview an illustrative sample**. This sample is predefined and clearly labeled; it is not generated by OpenAI.
+
+### 📏 Input Limits
+
+- **1–6** text sources
+- Up to **50,000 characters** per source
+- Up to **100,000 characters** across all sources
+- UTF-8 `.txt` imports up to **200 KB**, subject to the character limit
+
+## 🗂️ Project Structure
+
+```text
+.
+├── app.py                    # API, OpenAI integration, validation, request controls
+├── static/
+│   ├── index.html            # Landing page and documentation workspace
+│   ├── workspace.css         # Workspace styles and layout fixes
+│   ├── navigation.js         # Mobile navigation and scroll behavior
+│   └── workspace.js          # Inputs, draft rendering, review, and exports
+├── tests/
+│   ├── test_app.py           # Backend tests with mocked OpenAI responses
+│   └── browser_smoke.py      # Browser workflow checks
+├── .env.example              # Server configuration template
+├── .gitignore
+├── requirements.txt
+├── requirements-dev.txt
+├── SECURITY.md               # Real-data deployment considerations
+└── README.md
+```
+
+## 🧪 Testing
+
+Install the test dependencies and run the backend tests:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+```
+
+For browser checks, start a separate **unconfigured** server on port `8000`, then run:
+
+```bash
+python -m playwright install chromium
+python tests/browser_smoke.py
+```
+
+On Linux, browser system dependencies may also be required:
+
+```bash
+python -m playwright install-deps chromium
+```
+
+### ✅ Current Validation Status
+
+- 🟢 **22 backend tests passed.**
+- 🟢 **Chromium smoke tests passed**, covering sample rendering, review, export, TXT import, source-change invalidation, mocked AI submission, safe text rendering, mobile navigation, and no-JavaScript visibility.
+- 🟠 OpenAI responses were **mocked during testing**. A live OpenAI request was not tested in the supplied build because no API key was configured.
+- 🔴 These tests validate application behavior—not medical accuracy, regulatory compliance, or clinical safety.
+
+## 🛡️ Safety, Privacy & Limitations
+
+ClinSync AI is an educational hackathon prototype, **not a medical device or a replacement for clinical judgment**.
+
+- No autonomous diagnosis, prescribing, or treatment changes are implemented.
+- All generated outputs require human review and remain drafts, even after review checkboxes are completed.
+- Review checkboxes are not authenticated clinical sign-off.
+- The prototype accepts only synthetic or properly de-identified test data. It does not automatically detect or remove identifiers.
+- Submitted source names and text are sent to OpenAI when AI generation is requested.
+- The application does not persist source records or drafts in a database or browser local storage. Processing occurs in working memory; exports are saved by the user.
+- The API request sets `store: false`, but this does **not** guarantee zero provider retention. Account-specific terms and controls must be reviewed separately.
+- Clearing the workspace does not delete downloads or data already transmitted to a provider.
+- No EHR, pharmacy, laboratory, or external medical-evidence service is connected.
+- Real-patient-data deployment requires approved hosting, individual access controls, appropriate data-processing arrangements, retention policies, clinical validation, and security review. See [`SECURITY.md`](SECURITY.md).
+
+## 🔮 Future Scope
+
+- Approved, traceable retrieval from external evidence sources
+- More rigorous temporal and semantic consistency checks
+- PDF and DOCX ingestion
+- Authenticated clinician review and versioned audit trails
+- Organization-managed SSO and role-based access
+- Carefully governed EHR and laboratory integrations
+- Evaluation against representative, approved documentation datasets
 
 ---
 
-## License
+<div align="center">
 
-MIT — Synthetic data only, no real patient information. For demonstration / hackathon / educational use. Not a medical device. Does not provide medical advice.
+### 💜 Built by Team Vibranium
 
----
+**🏆 Agentic AI- IIT Bhuwneshwar**
 
-## Core Message
+**Lokesh — Leader, Quantum University**  
+**Jatin Saini — Co-leader, NGF College of Engineering & Technology**
 
-> **ClinSync AI doesn’t just generate documentation. It reconciles information, verifies evidence, validates the result, and knows when a human needs to take over.**
+*🧠 AI-assisted documentation. 🔗 Traceable sources. 🧑‍⚕️ Human judgment.*
 
-Built for verification, not hallucination. Autonomous where safe. Human where it matters.
-
----
-
-**Author:** ClinSync AI Team — 13 Sep 2026  
-**Version:** v1.0.0 — `SYNTHETIC • DEIDENTIFIED • NO REAL PHI`
-
-**Team:** Vibranium  
-**Leader:** Lokesh  
-**Co-Leader:** Jatin Saini
+</div>
